@@ -1,14 +1,17 @@
 <template>
-  <div class='wrapper'>
-    <h1 class='title'>MostPlayed</h1>
-    <div style="display:flex;align-items:center;margin-top:10px">
-      <span class='tab' @click='activeTab = "monthly"' :class='{"active": activeTab === "monthly"}'>This Month</span>
-      <span class='tab' @click='activeTab = "alltime"' :class='{"active": activeTab === "alltime"}'>All Time</span>
+  <div>
+    <div class='top-bar'>
+      <h1 class='title'>MostPlayed</h1>
+      <div style="display:flex;align-items:center;margin-top:10px">
+        <span class='tab' @click='activeTab = "monthly"' :class='{"active": activeTab === "monthly"}'>This Month</span>
+        <span class='tab' @click='activeTab = "alltime"' :class='{"active": activeTab === "alltime"}'>All Time</span>
+      </div>
     </div>
     <div class='inner-wrapper' v-show='activeTab === "monthly"'>
       <div class='container'>
         <h4 class='header'>Most Played Songs</h4>
-        <div class='item' v-for='(track, index) in monthlyData.topTracks'>
+        <div class='item' v-for='(track, index) in monthlyData.topTracks' :style='{"background-image": `url(${track.album.images[0].url})`}'>
+          <div class='overlay'></div>
           <span class='item-num'>{{ index + 1 }}</span>
           <div class='item-details'>
             <div class='item-name'>{{ track.name }}</div>
@@ -24,9 +27,9 @@
         <h4 class='header'>Most Played Artists</h4>
         <div class='item' v-for='(artist, index) in monthlyData.topArtists' :style='{"background-image": `url(${artist.images[0].url})`}'>
           <div class='overlay'></div>
-          <span class='item-num' style="color:#ddd">{{ index + 1 }}</span>
+          <span class='item-num'>{{ index + 1 }}</span>
           <div class='item-details'>
-            <div class='item-name' style="color:#eee">{{ artist.name }}</div>
+            <div class='item-name'>{{ artist.name }}</div>
           </div>
         </div>
       </div>
@@ -34,7 +37,8 @@
     <div class='inner-wrapper' v-show='activeTab === "alltime"'>
       <div class='container'>
         <h4 class='header'>Most Played Songs</h4>
-        <div class='item' v-for='(track, index) in allTimeData.topTracks'>
+        <div class='item' v-for='(track, index) in allTimeData.topTracks' :style='{"background-image": `url(${track.album.images[0].url})`}'>
+          <div class='overlay'></div>
           <span class='item-num'>{{ index + 1 }}</span>
           <div class='item-details'>
             <div class='item-name'>{{ track.name }}</div>
@@ -45,14 +49,14 @@
             </div>
           </div>
         </div>
-      </div>      
+      </div>
       <div class='container'>
         <h4 class='header'>Most Played Artists</h4>
         <div class='item' v-for='(artist, index) in allTimeData.topArtists' :style='{"background-image": `url(${artist.images[0].url})`}'>
           <div class='overlay'></div>
-          <span class='item-num' style="color:#ddd">{{ index + 1 }}</span>
+          <span class='item-num'>{{ index + 1 }}</span>
           <div class='item-details'>
-            <div class='item-name' style="color:#eee">{{ artist.name }}</div>
+            <div class='item-name'>{{ artist.name }}</div>
           </div>
         </div>
       </div>
@@ -92,7 +96,15 @@ export default {
     getMonthlyData (accessToken) {
       axios.get('https://api.spotify.com/v1/me/top/tracks?limit=10&time_range=short_term')
         .then(data => {
-          this.monthlyData.topTracks = data.data.items
+          const items = data.data.items
+          const ids = []
+          items.forEach(track => {
+            ids.push(track.id)
+          })
+          axios.get(`https://api.spotify.com/v1/tracks/?ids=${[...ids].toString()}`)
+            .then(trackData => {
+              this.monthlyData.topTracks = trackData.data.tracks
+            })
         })
 
       axios.get('https://api.spotify.com/v1/me/top/artists?limit=10&time_range=short_term')
@@ -103,7 +115,15 @@ export default {
     getAllTimeData (accessToken) {
       axios.get('https://api.spotify.com/v1/me/top/tracks?limit=10&time_range=long_term')
         .then(data => {
-          this.allTimeData.topTracks = data.data.items
+          const items = data.data.items
+          const ids = []
+          items.forEach(track => {
+            ids.push(track.id)
+          })
+          axios.get(`https://api.spotify.com/v1/tracks/?ids=${[...ids].toString()}`)
+            .then(trackData => {
+              this.allTimeData.topTracks = trackData.data.tracks
+            })
         })
 
       axios.get('https://api.spotify.com/v1/me/top/artists?limit=10&time_range=long_term')
@@ -116,35 +136,37 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+.top-bar {
   width: 100%;
-  /*border: 2px solid black;*/
-  margin: 2em auto 0 auto;
+  height: 130px;
+  background-color: #7CD89D;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .title {
-  width: 250px;
+  width: 260px;
   font-size: 2em;
-  color: #7cd89d;
+  color: #fff;
   font-weight: 300;
-  margin: 0;
+  margin: 0 0 10px 0;
   letter-spacing: 5px;
   text-transform: uppercase;
-  border-bottom: 2px solid #7cd89d
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff
 }
 .tab {
+  color: #eee;
   margin-right: 10px;
   cursor: pointer;
 }
 .tab:hover {
-  color: #666;
+  color: #fff;
 }
 .tab.active {
-  color: #1ed760;
+  color: #fff;
   font-weight: 600;
-  border-bottom: 1px solid #1ed760;
 }
 .inner-wrapper {
   width: 100%;
@@ -172,7 +194,7 @@ export default {
 }
 .item-num {
   font-size: 3em;
-  color: #ccc;
+  color: #ddd;
   font-weight: 300;
   width: 55px;
   z-index: 10;
@@ -182,7 +204,7 @@ export default {
 }
 .item-name {
   font-size: 2em;
-  color: #333;
+  color: #eee;
   letter-spacing: 2px;
   z-index: 10;
   position: relative;
@@ -193,9 +215,10 @@ export default {
 }
 .track-artist {
   font-size: 0.9em;
-  color: #666;
+  color: #ccc;
   letter-spacing: 1px;
   display: inline-block;
+  z-index: 10;
 }
 .overlay {
   width: 100%;  
