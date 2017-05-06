@@ -6,7 +6,7 @@
       <button class='button' @click='login()'>Get Started!</button>
     </div>
     <div class='footer'>
-      <p style="font-weight:300">Made with passion and music</p>
+      <p style="font-weight:300">Made with music</p>
       <p style="font-weight:300">by <a href="https://akiralaine.github.io">Akira Laine</a> | <a href="https://github.com/AkiraLaine">GitHub</a></p>
     </div>
   </div>

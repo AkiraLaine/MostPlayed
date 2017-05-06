@@ -7,15 +7,15 @@
         <span class='tab' @click='activeTab = "alltime"' :class='{"active": activeTab === "alltime"}'>All Time</span>
       </div>
     </div>
-    <div class='inner-wrapper' v-show='activeTab === "monthly"'>
+    <div style="display:flex;flex-direction:column;justify-content:center;" v-if='activeTab === "monthly"'>
+      <h2 class='header'>Most Played Songs</h2>
       <div class='container'>
-        <h4 class='header'>Most Played Songs</h4>
         <div class='item' v-for='(track, index) in monthlyData.topTracks' :style='{"background-image": `url(${track.album.images[0].url})`}'>
           <div class='overlay'></div>
           <span class='item-num'>{{ index + 1 }}</span>
           <div class='item-details'>
             <div class='item-name'>{{ track.name }}</div>
-            <div style="display:flex">
+            <div style="display:flex;justify-content:center">
               <div class='track-artist' v-for='(artist, index) in track.artists'>
                 {{ artist.name }}{{ index !== track.artists.length - 1 ? ',&nbsp;' : '' }}
               </div>
@@ -23,8 +23,8 @@
           </div>
         </div>
       </div>
+      <h2 class='header'>Most Played Artists</h2>
       <div class='container'>
-        <h4 class='header'>Most Played Artists</h4>
         <div class='item' v-for='(artist, index) in monthlyData.topArtists' :style='{"background-image": `url(${artist.images[0].url})`}'>
           <div class='overlay'></div>
           <span class='item-num'>{{ index + 1 }}</span>
@@ -34,15 +34,15 @@
         </div>
       </div>
     </div>
-    <div class='inner-wrapper' v-show='activeTab === "alltime"'>
+    <div style="display:flex;flex-direction:column;justify-content:center;" v-if='activeTab === "alltime"'>
+      <h2 class='header'>Most Played Songs</h2>
       <div class='container'>
-        <h4 class='header'>Most Played Songs</h4>
         <div class='item' v-for='(track, index) in allTimeData.topTracks' :style='{"background-image": `url(${track.album.images[0].url})`}'>
           <div class='overlay'></div>
           <span class='item-num'>{{ index + 1 }}</span>
           <div class='item-details'>
             <div class='item-name'>{{ track.name }}</div>
-            <div style="display:flex">
+            <div style="display:flex;justify-content:center">
               <div class='track-artist' v-for='(artist, index) in track.artists'>
                 {{ artist.name }}{{ index !== track.artists.length - 1 ? ',&nbsp;' : '' }}
               </div>
@@ -50,8 +50,8 @@
           </div>
         </div>
       </div>
+      <h2 class='header'>Most Played Artists</h2>
       <div class='container'>
-        <h4 class='header'>Most Played Artists</h4>
         <div class='item' v-for='(artist, index) in allTimeData.topArtists' :style='{"background-image": `url(${artist.images[0].url})`}'>
           <div class='overlay'></div>
           <span class='item-num'>{{ index + 1 }}</span>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class='footer'>
-      <p style="font-weight:300">Made with passion and music</p>
+      <p style="font-weight:300">Made with music</p>
       <p style="font-weight:300">by <a href="https://akiralaine.github.io">Akira Laine</a> | <a href="https://github.com/AkiraLaine">GitHub</a></p>
     </div>
   </div>
@@ -168,25 +168,26 @@ export default {
   color: #fff;
   font-weight: 600;
 }
-.inner-wrapper {
-  width: 100%;
-  margin-top: 2em;
-  display: flex;
-  justify-content: space-around;
-}
 .container {
-  width: 45%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .header {
-  text-align: left;
+  color: #1ED760;
+  font-weight: 400;
+  margin: 10px auto;
 }
 .item {
-  width: 100%;
+  width: 300px;
+  height: 300px;
   display: flex;
-  height: 70px;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: relative;
-  margin-bottom: 10px;
+  margin: 10px;
   background-size: cover;
   background-position: center;
   padding: 5px;
@@ -197,24 +198,25 @@ export default {
   color: #ddd;
   font-weight: 300;
   width: 55px;
+  text-align: center;
   z-index: 10;
 }
 .item-details {
   margin-left: 1em;
 }
 .item-name {
-  font-size: 2em;
+  font-size: 1.5em;
   color: #eee;
   letter-spacing: 2px;
   z-index: 10;
   position: relative;
-  max-width: 500px;
+  max-width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .track-artist {
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #ccc;
   letter-spacing: 1px;
   display: inline-block;
