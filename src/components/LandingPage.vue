@@ -1,15 +1,13 @@
 <template>
   <div class='wrapper'>
-    <div class='card'>
-      <div class='content'>
-        <h1 class='title'>MostPlayed</h1>
-        <h4 class='subtitle'>Find out what your most played Spotify artists and tracks are.</h4>
-        <button class='button' @click='login()'>Get Started</button>
-      </div>
-      <div class='footer'>
-        <p style="font-weight:300">Made with passion and music</p>
-        <p style="font-weight:300">by <a href="https://akiralaine.github.io">Akira Laine</a> | <a href="https://github.com/AkiraLaine">GitHub</a></p>
-      </div>
+    <div class='content'>
+      <h1 class='title'>MostPlayed</h1>
+      <h4 class='subtitle'>Find out what your most played Spotify artists and tracks are.</h4>
+      <button class='button' @click='login()'>Get Started!</button>
+    </div>
+    <div class='footer'>
+      <p style="font-weight:300">Made with passion and music</p>
+      <p style="font-weight:300">by <a href="https://akiralaine.github.io">Akira Laine</a> | <a href="https://github.com/AkiraLaine">GitHub</a></p>
     </div>
   </div>
 </template>
@@ -36,19 +34,7 @@ export default {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(#7cd89d, #1ed760);
-}
-.card {
-  width: 350px;
-  height: 450px;
-  background-color: #fcfcfc;
-  box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  box-sizing: border-box;
-  position: relative;
+  background: #7CD89D;
 }
 .content {
   width: 100%;
@@ -60,49 +46,46 @@ export default {
 }
 .title {
   font-size: 2em;
-  color: #7cd89d;
+  color: #fff;
   font-weight: 300;
-  margin: 0;
+  margin: 0 0 10px 0;
   letter-spacing: 5px;
   text-transform: uppercase;
-  border-bottom: 2px solid #7cd89d
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff
 }
 .subtitle {
   font-weight: 400;
-  color: #aaa;
+  color: #eee;
   font-size: 0.9em;
-  margin: 5px 0;
   text-align: center;
   letter-spacing: 2px;
-  width: 260px;
 }
 .button {
   background: none;
   outline: none;
   border: none;
-  padding: 10px 20px;
+  padding: 15px 35px;
   font-size: 0.9em;
-  color: #1ed760;
-  border: 1px solid #1ed760;
+  color: #eee;
+  background-color: #1ED760;
   cursor: pointer;
-  margin-top: 1.5em;
+  margin-top: 2em;
   transition: 0.3s ease all;
-}
-.button:hover {
-  background-color: #1ed760;
-  color: #fff;
+  box-shadow: 5px 5px 15px 0 rgba(0,0,0,0.3);
 }
 .footer {
   font-size: 0.9em;
   text-align: center;
   margin-top: auto;
+  margin-bottom: 10px;
 }
 .footer a  {
-  color: #333;
+  color: #eee;
   text-decoration: none;
   font-weight: 400;
 }
 .footer a:hover {
-  color: #666;
+  color: #fff;
 }
 </style>
