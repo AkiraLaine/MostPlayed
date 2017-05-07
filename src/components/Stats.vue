@@ -87,10 +87,12 @@ export default {
   },
   created () {
     const accessToken = window.location.hash.split('&')[0].split('=')[1]
+    const lsAccessToken = window.localStorage.getItem('accessToken')
+    window.localStorage.setItem('accessToken', accessToken || lsAccessToken)
     window.history.replaceState('', '', window.location.pathname)
-    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
-    this.getMonthlyData(accessToken)
-    this.getAllTimeData(accessToken)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken || lsAccessToken}`
+    this.getMonthlyData(accessToken || lsAccessToken)
+    this.getAllTimeData(accessToken || lsAccessToken)
   },
   methods: {
     getMonthlyData (accessToken) {
