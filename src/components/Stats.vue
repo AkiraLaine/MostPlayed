@@ -216,6 +216,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
 }
 .track-artist {
   font-size: 0.8em;
@@ -223,6 +224,7 @@ export default {
   letter-spacing: 1px;
   display: inline-block;
   z-index: 10;
+  text-align: center;
 }
 .overlay {
   width: 100%;  
