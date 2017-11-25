@@ -13,13 +13,11 @@
 </template>
 
 <script>
-import keys from '../keys'
-
 export default {
   name: 'landing-page',
   methods: {
     login () {
-      window.location.href = `https://accounts.spotify.com/authorize/?client_id=${keys.SPOTIFY_ID}&response_type=token&redirect_uri=${encodeURIComponent(window.location.origin + '/stats')}&scope=user-top-read`
+      window.location.href = `https://accounts.spotify.com/authorize/?client_id=${process.env.SPOTIFY_ID}&response_type=token&redirect_uri=${encodeURIComponent(window.location.origin + '/stats')}&scope=user-top-read`
     }
   }
 }
